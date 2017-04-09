@@ -1,6 +1,8 @@
 #ifndef LASERVIEWER_H
 #define LASERVIEWER_H
 
+#include "wavepainterwidget.h"
+
 #include <QMainWindow>
 
 #include <QObject>
@@ -21,6 +23,8 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QPainter>
+#include <QGridLayout>
+#include <QtGlobal>
 
 namespace Ui {
 class LaserViewer;
@@ -60,6 +64,7 @@ private:
     int DrawHightConvertY(int hight);
     void paintEvent(QPaintEvent *event);
 
+    WavePainterWidget *painter;
 };
 
 #endif // LASERVIEWER_H

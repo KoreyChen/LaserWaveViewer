@@ -14,8 +14,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        laserviewer.cpp
+        laserviewer.cpp \
+    wavepainterwidget.cpp
 
-HEADERS  += laserviewer.h
+HEADERS  += laserviewer.h \
+    wavepainterwidget.h
 
 FORMS    += laserviewer.ui

@@ -1,6 +1,7 @@
 #include "laserviewer.h"
 #include "ui_laserviewer.h"
 
+
 LaserViewer::LaserViewer(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::LaserViewer)
@@ -35,7 +36,6 @@ LaserViewer::LaserViewer(QWidget *parent) :
     recevieDataCount=0;
     ui->recevieCountLabel->setText(" ");
 
-
     //消息窗口
     msgLabel = new QLabel;
     msgLabel->setMinimumSize(msgLabel->sizeHint());
@@ -45,6 +45,13 @@ LaserViewer::LaserViewer(QWidget *parent) :
 
 
     //画图
+    painter  = new WavePainterWidget();
+
+    QGridLayout *gridLayout = new QGridLayout;
+    gridLayout->setMargin(0); //设置边框大小
+    gridLayout->setSpacing(0);//设置间距
+    gridLayout->addWidget(painter, 0, 0);
+    ui->WaveWidget->setLayout(gridLayout);//添加到窗口中
 
 
 
@@ -60,16 +67,17 @@ void LaserViewer::DrawWaveform()
     int hight = ui->WaveWidget->geometry().height();
     int width = ui->WaveWidget->geometry().width();
 
+
     ui->recevieTextEdit->append("H:"+QString::number(hight,10));
     ui->recevieTextEdit->append("W:"+QString::number(width,10));
 
-
-//    int x,y;
-    for(int i=0;i<256;i++)
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));//没有这句的话，那么每次运行都会产生相同的随机数，那也就不叫随机数了。
+    for(int i=0;i<1024;i++)
     {
-        //Painter->drawPoint(i,i);
+        painter->WavePoint[i] = qrand()%256;;
     }
-    ui->WaveWidget->repaint();
+    painter->repaint();
+    //ui->WaveWidget->repaint();
 }
 
 int LaserViewer::DrawHightConvertY(int hight)
@@ -81,14 +89,15 @@ int LaserViewer::DrawHightConvertY(int hight)
 
 void LaserViewer::paintEvent(QPaintEvent *)
 {
-        //QPainter painter(ui->WaveWidget);
-        QPainter painter(this);
-        // 反走样
-        painter.setRenderHint(QPainter::Antialiasing, true);
-        // 设置画笔颜色
-        painter.setPen(QColor(0, 160, 230));
-        // 绘制直线
-        painter.drawLine(0,0,100,100);
+
+//        QPainter painter(ui->WaveWidget);
+//        //QPainter painter(this);
+//        // 反走样
+//        painter.setRenderHint(QPainter::Antialiasing, true);
+//        // 设置画笔颜色
+//        painter.setPen(QColor(0, 160, 230));
+//        // 绘制直线
+//        painter.drawLine(0,0,100,100);
 }
 
 
